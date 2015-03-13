@@ -96,6 +96,7 @@ void FreeNode(List* list, DataPtr data, DeleteDataFunc func)
         List* node = list;
         func(data);
         list = list->next;
+        node->next = NULL;
         delete node;
         return;
     }
@@ -108,6 +109,8 @@ void FreeNode(List* list, DataPtr data, DeleteDataFunc func)
         {
             List* deleteNode = next;
             current->next = next->next;
+
+            deleteNode->next = NULL;
             func(data);
             delete deleteNode;
             return;
@@ -124,6 +127,7 @@ void FreeList(List* list, DeleteDataFunc func)
     {
         deleteNode = list;
         list = list->next;
+        deleteNode->next = NULL;
 
         func(deleteNode->data);
         delete deleteNode;
