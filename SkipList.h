@@ -4,19 +4,24 @@
 typedef void* DataType;
 typedef MAX_LEVEL 10;
 
-typedef int (CmpFunc*)(SkiplistNode*, SkiplistNode*);
+// return >0 : pNode->data > data
+typedef int (CmpFunc*)(SkiplistNode*, DataType*);
 
 typedef struct SkiplistNode {
     DataType data;
+    // keep next of each level
     struct LevelArray {
         struct SkiplistNode* next;
     } levels[];
 } SkiplistNode;
 
 typedef struct Skiplist {
-    struct SkiplistNode *heard, *tail;
+    struct SkiplistNode *head, *tail;
     int length;
     int maxLevel;
 } Skiplist;
 
+
+SkiplistNode* FindNode(SkipList* list, DataType data, CmpFunc func);
 #endif
+
